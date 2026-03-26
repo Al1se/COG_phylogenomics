@@ -1,0 +1,9 @@
+input_records	283
+input_aligned_len	1166
+min_occupancy_threshold	0.7
+kept_columns	552
+dropped_columns	614
+output_aligned_len	552
+min_column_occupancy	0.003534
+mean_column_occupancy	0.494139
+max_column_occupancy	1.000000

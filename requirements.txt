@@ -1,0 +1,7 @@
+# Active structure-aware pipeline
+biopython>=1.84
+
+# Legacy helper support
+# Only needed for scripts/legacy_helpers/07_build_upgma_tree.py
+numpy>=2.1
+scipy>=1.14

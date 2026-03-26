@@ -1,0 +1,82 @@
+RUNBOOK: COG0086 serious pipeline (воспроизводимый запуск)
+Дата: 2026-03-24
+
+0) Рабочая директория
+cd /home/pa/Documents/COGS2
+
+1) Создать каталог прогона
+RUN_DIR="/home/pa/Documents/COGS2/COG0086_serious_run_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$RUN_DIR"
+
+2) Подготовка входов
+cp ./275_COG0086.fasta "$RUN_DIR/COG0086.275.raw.fasta"
+
+python3 ./04_prepare_structure_fasta.py \
+  ./newZN0086.fasta \
+  -o "$RUN_DIR/COG0086.structures.cleaned.fasta" \
+  --min-length 400 \
+  --report "$RUN_DIR/COG0086.structures.cleaning.tsv"
+
+cat "$RUN_DIR/COG0086.275.raw.fasta" "$RUN_DIR/COG0086.structures.cleaned.fasta" > "$RUN_DIR/COG0086.mega.input.fasta"
+
+3) Большое MSA
+muscle -super5 "$RUN_DIR/COG0086.mega.input.fasta" -output "$RUN_DIR/COG0086.mega.msa.fasta"
+
+4) Фильтрация структур (COG не удалять)
+python3 ./06_filter_msa_keep_all_cogs.py \
+  "$RUN_DIR/COG0086.mega.msa.fasta" \
+  --cog-fasta "$RUN_DIR/COG0086.275.raw.fasta" \
+  -o "$RUN_DIR/COG0086.mega.msa.filtered_keepcogs.fasta" \
+  --target-total 500 \
+  --threshold 0.22 \
+  --report "$RUN_DIR/COG0086.structure_filter.tsv"
+
+5) Дерево (UPGMA/Hamming)
+python3 ./07_build_upgma_tree.py \
+  "$RUN_DIR/COG0086.mega.msa.filtered_keepcogs.fasta" \
+  -o "$RUN_DIR/COG0086.mega.tree.upgma.nwk" \
+  --max-seqs 500
+
+6) Перестановка MSA по дереву
+python3 ./02_sort_fasta_by_newick.py \
+  "$RUN_DIR/COG0086.mega.msa.filtered_keepcogs.fasta" \
+  "$RUN_DIR/COG0086.mega.tree.upgma.nwk" \
+  -o "$RUN_DIR/COG0086.mega.msa.filtered.reordered.fasta"
+
+Примечание:
+- `07_build_upgma_tree.py` теперь не режет вход молча. Если после фильтрации записей > `--max-seqs`,
+  скрипт завершится с ошибкой, и нужно либо ослабить фильтрацию раньше, либо явно повысить лимит.
+- `02_sort_fasta_by_newick.py` теперь тоже валится при неполном совпадении tree ↔ FASTA.
+
+7) Массовое переименование заголовков FASTA
+python3 ./08_rename_fasta_headers.py \
+  "$RUN_DIR/COG0086.mega.msa.filtered.reordered.fasta" \
+  -o "$RUN_DIR/COG0086.mega.msa.filtered.reordered.renamed@phylogeny.fasta" \
+  --suffix phylogeny
+
+8) Быстрая проверка количества записей
+for f in \
+  "$RUN_DIR/COG0086.275.raw.fasta" \
+  "$RUN_DIR/COG0086.structures.cleaned.fasta" \
+  "$RUN_DIR/COG0086.mega.input.fasta" \
+  "$RUN_DIR/COG0086.mega.msa.fasta" \
+  "$RUN_DIR/COG0086.mega.msa.filtered_keepcogs.fasta" \
+  "$RUN_DIR/COG0086.mega.msa.filtered.reordered.fasta" \
+  "$RUN_DIR/COG0086.mega.msa.filtered.reordered.renamed@phylogeny.fasta"; do
+  printf "%s\t" "$(basename "$f")"
+  grep -c '^>' "$f"
+done
+
+9) Проверка tree-файла
+wc -c "$RUN_DIR/COG0086.mega.tree.upgma.nwk"
+
+10) Что смотреть глазами в alignment
+- Открыть файл: COG0086.mega.msa.filtered.reordered.fasta
+- Найти реальные мотивы:
+  - NADFDGD (каталитический),
+  - Zn-связывающий участок,
+  - соседние фланки с высокой/средней консервативностью.
+- После ручного выбора мотивов запустить 03_extract_motif_windows.py на этих мотивах.
+
+11) Применение к COG0085
+- Повторить те же шаги, заменив COG0086 на COG0085 и используя соответствующие структурные входы.

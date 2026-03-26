@@ -1,0 +1,61 @@
+query_header	query_length	polymer_entity	sequence_identity	evalue	bitscore	chain_tokens
+CFX0092_RS01055|Candidatus Promineifilum breve	563	5YM0_1	0.6670	4.73e-247	768.000	5YM0_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	5ZE4_1	0.6670	3.12e-246	766.000	5ZE4_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	8IKZ_1	0.6670	3.12e-246	766.000	8IKZ_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	9JPI_1	0.6670	3.12e-246	766.000	9JPI_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	9L8R_1	0.6670	3.12e-246	766.000	9L8R_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	8IMU_1	0.6660	1.5e-245	764.000	8IMU_A,8IMU_B
+CFX0092_RS01055|Candidatus Promineifilum breve	563	9JSQ_1	0.6660	1.1e-245	764.000	9JSQ_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	8HS0_1	0.6660	2.82e-245	763.000	8HS0_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	9IX7_1	0.6560	1.37e-241	752.000	9IX7_A,9IX7_B
+CFX0092_RS01055|Candidatus Promineifilum breve	563	6NTE_1	0.5180	7.31e-173	553.000	6NTE_A,6NTE_B
+CFX0092_RS01055|Candidatus Promineifilum breve	563	6OVT_1	0.5070	2.74e-164	528.000	6OVT_A,6OVT_B,6OVT_C,6OVT_D
+CFX0092_RS01055|Candidatus Promineifilum breve	563	8EJ0_1	0.3280	1.61e-73	263.000	8EJ0_A,8EJ0_C,8EJ0_E,8EJ0_G
+CFX0092_RS01055|Candidatus Promineifilum breve	563	8EPZ_1	0.3280	1.61e-73	263.000	8EPZ_A,8EPZ_B
+CFX0092_RS01055|Candidatus Promineifilum breve	563	5J83_1	0.3200	1e-70	255.000	5J83_A,5J83_B
+CFX0092_RS01055|Candidatus Promineifilum breve	563	5J84_1	0.3200	1e-70	255.000	5J84_A,5J84_B,5J84_C,5J84_D,5J84_E,5J84_F,5J84_G,5J84_H
+CFX0092_RS01055|Candidatus Promineifilum breve	563	9EVV_1	0.3200	1e-70	255.000	9EVV_A,9EVV_B,9EVV_C,9EVV_D
+CFX0092_RS01055|Candidatus Promineifilum breve	563	5J85_1	0.3180	2.51e-70	254.000	5J85_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	7M3K_1	0.3220	9.28e-65	237.000	7M3K_A
+CFX0092_RS01055|Candidatus Promineifilum breve	563	5OYN_1	0.3180	1.37e-56	213.000	5OYN_A,5OYN_B,5OYN_C,5OYN_D
+CFX0092_RS01055|Candidatus Promineifilum breve	563	2GP4_1	0.3190	5.63e-48	186.000	2GP4_A,2GP4_B
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	6OVT_1	0.5900	1.17e-197	625.000	6OVT_A,6OVT_B,6OVT_C,6OVT_D
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	6NTE_1	0.5170	2.64e-181	578.000	6NTE_A,6NTE_B
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	5YM0_1	0.4900	6.28e-163	524.000	5YM0_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	8IKZ_1	0.4900	1.17e-162	524.000	8IKZ_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	5ZE4_1	0.4900	3.01e-162	522.000	5ZE4_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	8HS0_1	0.4900	3.01e-162	522.000	8HS0_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	9JPI_1	0.4900	3.01e-162	522.000	9JPI_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	9L8R_1	0.4900	3.01e-162	522.000	9L8R_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	9JSQ_1	0.4880	1.05e-161	521.000	9JSQ_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	8IMU_1	0.4880	1.44e-161	520.000	8IMU_A,8IMU_B
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	9IX7_1	0.4560	2.07e-153	497.000	9IX7_A,9IX7_B
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	5J83_1	0.3680	4.04e-106	359.000	5J83_A,5J83_B
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	5J84_1	0.3680	4.04e-106	359.000	5J84_A,5J84_B,5J84_C,5J84_D,5J84_E,5J84_F,5J84_G,5J84_H
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	9EVV_1	0.3680	4.04e-106	359.000	9EVV_A,9EVV_B,9EVV_C,9EVV_D
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	5J85_1	0.3670	1.03e-105	358.000	5J85_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	8EJ0_1	0.3650	1.3e-102	349.000	8EJ0_A,8EJ0_C,8EJ0_E,8EJ0_G
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	8EPZ_1	0.3650	1.3e-102	349.000	8EPZ_A,8EPZ_B
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	7M3K_1	0.3460	1.01e-80	284.000	7M3K_A
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	5OYN_1	0.3200	7.47e-73	261.000	5OYN_A,5OYN_B,5OYN_C,5OYN_D
+CSUB_C0128|Candidatus Caldarchaeum subterraneum	563	2GP4_1	0.3020	7.05e-52	198.000	2GP4_A,2GP4_B
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	6NTE_1	0.4380	3.59e-144	470.000	6NTE_A,6NTE_B
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	6OVT_1	0.4310	5.61e-137	449.000	6OVT_A,6OVT_B,6OVT_C,6OVT_D
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	5YM0_1	0.4190	3.24e-127	421.000	5YM0_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	8IKZ_1	0.4190	4.43e-127	420.000	8IKZ_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	5ZE4_1	0.4190	1.54e-126	419.000	5ZE4_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	9IX7_1	0.4010	1.54e-126	419.000	9IX7_A,9IX7_B
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	9JPI_1	0.4190	1.54e-126	419.000	9JPI_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	9L8R_1	0.4190	1.54e-126	419.000	9L8R_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	9JSQ_1	0.4190	2.88e-126	418.000	9JSQ_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	8IMU_1	0.4170	7.35e-126	417.000	8IMU_A,8IMU_B
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	8HS0_1	0.4190	1e-125	416.000	8HS0_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	8EJ0_1	0.3400	2.77e-87	304.000	8EJ0_A,8EJ0_C,8EJ0_E,8EJ0_G
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	8EPZ_1	0.3400	2.77e-87	304.000	8EPZ_A,8EPZ_B
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	5J83_1	0.3350	3.34e-84	295.000	5J83_A,5J83_B
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	5J84_1	0.3350	3.34e-84	295.000	5J84_A,5J84_B,5J84_C,5J84_D,5J84_E,5J84_F,5J84_G,5J84_H
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	9EVV_1	0.3350	3.34e-84	295.000	9EVV_A,9EVV_B,9EVV_C,9EVV_D
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	5J85_1	0.3330	8.43e-84	293.000	5J85_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	7M3K_1	0.3040	1.1e-65	240.000	7M3K_A
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	5OYN_1	0.3150	2.11e-60	224.000	5OYN_A,5OYN_B,5OYN_C,5OYN_D
+PAES_RS03730|Prosthecochloris aestuarii DSM 271	563	2GP4_1	0.3180	1.01e-56	213.000	2GP4_A,2GP4_B

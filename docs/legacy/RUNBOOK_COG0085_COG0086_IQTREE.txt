@@ -1,0 +1,162 @@
+RUNBOOK: пайплайн COG0085/COG0086 с деревом через IQ-TREE
+Дата: 2026-03-24
+
+0) Что делает каждый скрипт в этом пайплайне
+- 04_prepare_structure_fasta.py
+  Чистит структурный FASTA: убирает гэпы/мусор, фильтрует по длине, пишет cleaned FASTA + TSV-отчет.
+- 06_filter_msa_keep_all_cogs.py
+  Фильтрует ТОЛЬКО структурные последовательности в MSA, все COG-последовательности сохраняет принудительно.
+- 09_build_iqtree_tree.py
+  Строит дерево IQ-TREE из aligned FASTA, сохраняет итоговый Newick в .nwk.
+  Дополнительно пишет:
+  - <prefix>.ids.fasta (MSA с ID без пробелов),
+  - <prefix>.idmap.tsv (сопоставление ID -> исходный заголовок),
+  - <prefix>.cmd.log (команда + stdout/stderr IQ-TREE).
+- 02_sort_fasta_by_newick.py
+  Переставляет FASTA в порядке листьев Newick.
+- 08_rename_fasta_headers.py
+  Массово переименовывает заголовки в формат ID@phylogeny.
+
+1) Предварительные требования
+- Установлен MUSCLE 5 (команда muscle).
+- Установлен IQ-TREE 2 (команда iqtree2).
+- Python 3.
+
+Проверка:
+  muscle -version
+  iqtree2 --version
+  python3 --version
+
+2) Входы для COG
+- COG0085:
+  - short-list COG: 275_COG0085.fasta
+  - структуры: ZN0085.fasta
+- COG0086:
+  - short-list COG: 275_COG0086.fasta
+  - структуры: newZN0086.fasta
+
+3) Универсальный запуск (подставьте COG и STRUCT_FASTA)
+
+Пример A (COG0085):
+  COG=COG0085
+  STRUCT_FASTA=ZN0085.fasta
+
+Пример B (COG0086):
+  COG=COG0086
+  STRUCT_FASTA=newZN0086.fasta
+
+Далее одинаковая последовательность:
+
+  cd /home/pa/Documents/COGS2
+
+  RUN_DIR="/home/pa/Documents/COGS2/${COG}_iqtree_run_$(date +%Y%m%d_%H%M%S)"
+  mkdir -p "$RUN_DIR"
+
+  cp "./275_${COG}.fasta" "$RUN_DIR/${COG}.275.raw.fasta"
+
+  python3 ./04_prepare_structure_fasta.py \
+    "./${STRUCT_FASTA}" \
+    -o "$RUN_DIR/${COG}.structures.cleaned.fasta" \
+    --min-length 400 \
+    --report "$RUN_DIR/${COG}.structures.cleaning.tsv"
+
+  cat "$RUN_DIR/${COG}.275.raw.fasta" \
+      "$RUN_DIR/${COG}.structures.cleaned.fasta" \
+      > "$RUN_DIR/${COG}.mega.input.fasta"
+
+  muscle -super5 "$RUN_DIR/${COG}.mega.input.fasta" \
+    -output "$RUN_DIR/${COG}.mega.msa.fasta"
+
+  python3 ./06_filter_msa_keep_all_cogs.py \
+    "$RUN_DIR/${COG}.mega.msa.fasta" \
+    --cog-fasta "$RUN_DIR/${COG}.275.raw.fasta" \
+    -o "$RUN_DIR/${COG}.mega.msa.filtered_keepcogs.fasta" \
+    --target-total 500 \
+    --threshold 0.22 \
+    --report "$RUN_DIR/${COG}.structure_filter.tsv"
+
+  python3 ./09_build_iqtree_tree.py \
+    "$RUN_DIR/${COG}.mega.msa.filtered_keepcogs.fasta" \
+    -o "$RUN_DIR/${COG}.mega.tree.iqtree.nwk" \
+    --model MFP \
+    --bootstrap 1000 \
+    --alrt 1000 \
+    --threads AUTO \
+    --prefix "$RUN_DIR/${COG}.mega.tree.iqtree"
+
+  python3 ./02_sort_fasta_by_newick.py \
+    "$RUN_DIR/${COG}.mega.msa.filtered_keepcogs.fasta" \
+    "$RUN_DIR/${COG}.mega.tree.iqtree.nwk" \
+    -o "$RUN_DIR/${COG}.mega.msa.filtered.reordered.fasta"
+
+  python3 ./08_rename_fasta_headers.py \
+    "$RUN_DIR/${COG}.mega.msa.filtered.reordered.fasta" \
+    -o "$RUN_DIR/${COG}.mega.msa.filtered.reordered.renamed@phylogeny.fasta" \
+    --suffix phylogeny
+
+4) Быстрая проверка результата
+
+  for f in \
+    "$RUN_DIR/${COG}.275.raw.fasta" \
+    "$RUN_DIR/${COG}.structures.cleaned.fasta" \
+    "$RUN_DIR/${COG}.mega.input.fasta" \
+    "$RUN_DIR/${COG}.mega.msa.fasta" \
+    "$RUN_DIR/${COG}.mega.msa.filtered_keepcogs.fasta" \
+    "$RUN_DIR/${COG}.mega.msa.filtered.reordered.fasta" \
+    "$RUN_DIR/${COG}.mega.msa.filtered.reordered.renamed@phylogeny.fasta"; do
+    printf "%s\t" "$(basename "$f")"
+    grep -c '^>' "$f"
+  done
+
+  wc -c "$RUN_DIR/${COG}.mega.tree.iqtree.nwk"
+
+  python3 ./02_sort_fasta_by_newick.py \
+    "$RUN_DIR/${COG}.mega.msa.filtered_keepcogs.fasta" \
+    "$RUN_DIR/${COG}.mega.tree.iqtree.nwk" \
+    -o /tmp/"${COG}.check.reordered.fasta"
+
+Ключевая проверка: строка Matched records должна быть равна Input FASTA records.
+Теперь это проверяется fail-fast: `02_sort_fasta_by_newick.py` завершится ошибкой при mismatch tree ↔ FASTA.
+
+5) Что означает каждый итоговый файл
+- ${COG}.275.raw.fasta
+  Все COG-последовательности из short-list (их нельзя удалять в фильтрации).
+- ${COG}.structures.cleaned.fasta
+  Структурные последовательности после чистки/обрезки мусора.
+- ${COG}.structures.cleaning.tsv
+  Отчет по чистке структур (ok/too_short/другие причины).
+- ${COG}.mega.input.fasta
+  Конкатенация COG + cleaned structures до выравнивания.
+- ${COG}.mega.msa.fasta
+  Большое MSA после MUSCLE.
+- ${COG}.mega.msa.filtered_keepcogs.fasta
+  MSA после фильтрации структур, COG оставлены все.
+- ${COG}.structure_filter.tsv
+  Подробный отчет фильтрации по score и решениям keep/drop.
+- ${COG}.mega.tree.iqtree.nwk
+  Итоговое филогенетическое дерево IQ-TREE в Newick.
+- ${COG}.mega.tree.iqtree.treefile
+  Оригинальный treefile IQ-TREE (также Newick).
+- ${COG}.mega.tree.iqtree.ids.fasta
+  Временный/служебный MSA с нормализованными ID для IQ-TREE.
+- ${COG}.mega.tree.iqtree.idmap.tsv
+  Сопоставление ID к исходным заголовкам FASTA.
+- ${COG}.mega.tree.iqtree.cmd.log
+  Лог запуска IQ-TREE (команда + stdout/stderr).
+- ${COG}.mega.msa.filtered.reordered.fasta
+  Фильтрованное MSA, переставленное по порядку листьев дерева.
+- ${COG}.mega.msa.filtered.reordered.renamed@phylogeny.fasta
+  Та же последовательность, но заголовки в формате ID@phylogeny.
+
+6) Примечания по качеству дерева
+- Рекомендуемые параметры для устойчивого дерева:
+  - --model MFP
+  - --bootstrap 1000
+  - --alrt 1000
+  - --bnni (включен по умолчанию в 09_build_iqtree_tree.py)
+- Для ускорения (черновой прогон) можно снизить:
+  - --bootstrap 200
+  - --alrt 200
+- Если когда-нибудь после фильтрации записей окажется больше лимита для UPGMA,
+  `07_build_upgma_tree.py` больше не обрежет вход молча: он завершится с ошибкой, пока вы не поднимете `--max-seqs`
+  или явно не разрешите exploratory-усечение.
