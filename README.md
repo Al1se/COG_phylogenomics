@@ -297,12 +297,10 @@ If `IQTREE_BIN` is not set, the wrappers try:
 
 For the exact order of stages, identifier flow, input/output file semantics, and the role of every active script, see [`docs/PIPELINE_TECHNICAL_REFERENCE.md`](docs/PIPELINE_TECHNICAL_REFERENCE.md).
 
-## Supervisor And Legacy Components
+## Supervisor Components
 
 These files were copied without code changes and are treated as external legacy tools:
 - `scripts/supervisor/udav_pdb.py`
 - `scripts/supervisor/udav_soft.py`
 - `scripts/supervisor/find_ligands_in_PDB.py`
 - `resources/supervisor/COG_to_PDB_chains.txt`
-
-Older notes and runbooks remain under `docs/legacy/`.

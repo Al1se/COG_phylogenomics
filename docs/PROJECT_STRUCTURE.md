@@ -47,8 +47,3 @@
   Stage-by-stage technical description of identifiers, scripts, files, and data flow.
 - `docs/PROJECT_STRUCTURE.md`
   High-level map of the repository.
-
-## Legacy project memory
-
-- `docs/legacy`
-  Old runbooks, strict technical specifications, and the original prompt context.
